@@ -5,7 +5,7 @@ let movieList = [{title:'StarWars', director:'Lucas'}]
 
 let server = http.createServer((req,res) => {
     if (req.method.toLowerCase() == 'post'){
-
+        addNewMovie(req,res);
     } else {
         showList(req,res);
     }
@@ -22,5 +22,24 @@ function showList(req,res) {
         res.write('<li>' + item.title + '(' + item.director + ')</li>' )
     }, this);
     res.write('</ul></div></body></html>');
-    res.end()
+    res.end();
+}
+
+function addNewMovie(req, res){
+    let body = '';
+    req.on('data', (chunk) => {
+        body += chunk;
+    });
+    req.on('end', () => {
+        let data = querystring.parse(body);
+        let title = data.title;
+        let director = data.director;
+
+        movieList.push({title:title, director:director});
+        
+        //res.end('Success');
+        res.statusCode = 302;
+        res.setHeader('Location', '.');
+        res.end();
+    });
 }
