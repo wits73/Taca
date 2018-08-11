@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "async": "^2.6.1",
+    "formidable": "^1.2.1",
     "jade": "^1.11.0"
   },
   "devDependencies": {},
