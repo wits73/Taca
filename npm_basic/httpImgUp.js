@@ -1,7 +1,7 @@
 const fs = require('fs');
 const pathUtil = require('path');
 const http = require('http');
-const formidable = require('formidable')
+const formidable = require('formidable');
 
 let uploadDir = __dirname + '/upload';
 let imageDir = __dirname + '/image';
@@ -13,15 +13,16 @@ let server = http.createServer((req,res) => {
         showList(res);
     } 
     // Request image
-    else if (req.method.toLowerCase() == 'get' && req.url.indexOf('/image') == 0){
-        let path = __dirname + req.url;
-        res.writeHead(200, {'Content-Type' : 'image/jpeg'});
+    else if (req.method.toLowerCase() == 'get' && req.url.indexOf('/image') == 0) {
+        var path = __dirname + req.url;
+        res.writeHead(200, { 'Content-Type': 'image/jpeg' })
         fs.createReadStream(path).pipe(res);
-    }
+     } 
     // Request upload
-    else if(req.method.toLocaleLowerCase() == 'post'){
-        addNewPaint(res, req);
+    else if(req.method.toLowerCase() == 'post'){
+        addNewPaint(req, res);
     }
+
 
 });
 server.listen(3000, () => {
@@ -29,32 +30,32 @@ server.listen(3000, () => {
 });
 
 function showList(res) {
-    res.writeHeader(200, {'Content-Type' : 'text/html', });
-    
-    let body = '<html>';
-    body += '<head><meta charset="UTF-8"></head>';
-    body += '<body>';
-    body += '<h3>Favorite Paint</h3>';
-    body += '<ul>';
+   res.writeHeader(200, { 'content-type': 'text/html' });
 
-    paintList.forEach((item, index)=>{
+   var body = '<html>';
+   body += '<head><meta charset="UTF-8"></head>';
+   body += '<body>';
+   body += '<h3>Favorite Paint</h3>';
 
-        body += '<ul>';
-        if(item.image){
-            body += '<img src="' + item.image + '" style="height:100pt"></img>';
-        }
-        body += item.title;
-        body += '</li>';
-    });
-    body += '</ul>';
-    
-    body += '<form action="." enctype="multipart/form-data" method="post">' +
-            '<div><label>Name : </label><input type="text" name="title"></div>' + 
-            '<div><label>Image : </label><input type="file" name="image" value="choose"></div>' +
-            '<input type="submit" value="upload">' +
-            '</form>';
-    body +=  '</body></html>';
-    res.end(body);
+   body += '<ul>';
+   paintList.forEach(function (item, index) {
+      body += '<li>';
+      if (item.image) {
+         body += '<img src="' + item.image + '" style="height:100pt"></img>';
+      }
+      body += item.title;
+      body += '</li>';
+   });
+   body += '</ul>';
+
+   body += '<form action="." enctype="multipart/form-data" method="post">' +
+   '<div><label>작품 이름 : </label><input type="text" name="title"></div>' +
+   '<div><label>작품 이미지 : </label><input type="file" name="image" value="작품 파일 선택"></div>' +
+   '<input type="submit" value="upload">' +
+   '</form>';
+   body += '</body></html>';
+
+   res.end(body);
 }
 
 

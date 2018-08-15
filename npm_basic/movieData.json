@@ -1,0 +1,23 @@
+[
+	{
+      "id":0,
+      "title":"Avatar",
+	"director":"James Cameron",
+	"year":2009,
+	"synopsis":"A paraplegic marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world he feels is his home."
+	},
+	{
+      "id":1,
+      "title":"StarWars",
+	"director":"George Lucas",
+	"year":1977,
+	"synopsis":"A long time of Gallaxy.."
+	},
+	{
+      "id":2,
+      "title":"Interstellar",
+	"director":"Christopher Nolan",
+	"year":2014,
+	"synopsis":"A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival."
+	}
+]
