@@ -1,21 +1,24 @@
 const net = require('net');
-
-const ip = '127.0.0.1';
-const port = 3000;
-
-const socket = new net.Socket();
-socket.connect({host:ip, port:port}, () => {
-    console.log('Connecting server');
-
-    socket.write('Hello Socket Server \n');
-    socket.end();
+const server = net.createServer((socket) => {
+    // connection event
+    console.log('connecting client');
+    socket.write('Selcome to Socket Server');
 
     socket.on('data', (chunk) => {
-        console.log('Sent by Server : ', chunk.toString());
+        console.log('Sending by client : ', chunk.toString());
     });
 
     socket.on('end', () => {
-        console.log('Connection terminated');
+        console.log('Ending connect');
     });
-
 })
+
+server.on('listening', function() {
+    console.log('Server is listening');
+});
+
+server.on('close', function() {
+    console.log('Server closed');
+});
+
+server.listen(3000);
